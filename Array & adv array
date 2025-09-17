@@ -1,0 +1,135 @@
+<?php
+// =====================
+// Student Section
+// =====================
+
+// Function to calculate grade
+function calculateGrade($marks) {
+    if ($marks >= 90) {
+        return "A";
+    } elseif ($marks >= 75) {
+        return "B";
+    } elseif ($marks >= 50) {
+        return "C";
+    } else {
+        return "F";
+    }
+}
+
+// Array of students with marks
+$students = array(
+    "John" => 85,
+    "Mary" => 92,
+    "Peter" => 67,
+    "Anita" => 45
+);
+
+// =====================
+// Employee Section
+// =====================
+
+// Multidimensional associative array (Employee details)
+$employees = array(
+    array("id" => 101, "name" => "John", "basic" => 20000, "bonus" => 5000),
+    array("id" => 102, "name" => "Mary", "basic" => 25000, "bonus" => 7000),
+    array("id" => 103, "name" => "Peter", "basic" => 18000, "bonus" => 4000),
+    array("id" => 104, "name" => "Anita", "basic" => 22000, "bonus" => 6000)
+);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            box-shadow: 0px 3px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #007bff;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+        td {
+            background: #f4f6f7;
+        }
+        .gradeA { color: green; font-weight: bold; }
+        .gradeB { color: blue; font-weight: bold; }
+        .gradeC { color: orange; font-weight: bold; }
+        .gradeF { color: red; font-weight: bold; }
+        .highlight {
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Student Grades Section -->
+        <h2>Student Grades</h2>
+        <table>
+            <tr>
+                <th>Student</th>
+                <th>Marks</th>
+                <th>Grade</th>
+            </tr>
+            <?php foreach ($students as $name => $marks) {
+                $grade = calculateGrade($marks);
+                $class = "grade" . $grade;
+            ?>
+                <tr>
+                    <td><?php echo $name; ?></td>
+                    <td><?php echo $marks; ?></td>
+                    <td class="<?php echo $class; ?>"><?php echo $grade; ?></td>
+                </tr>
+            <?php } ?>
+        </table>
+
+        <!-- Employee Salary Section -->
+        <h2>Employee Salary Details</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Basic Salary</th>
+                <th>Bonus</th>
+                <th>Total Salary</th>
+            </tr>
+            <?php foreach ($employees as $emp) {
+                $totalSalary = $emp["basic"] + $emp["bonus"];
+            ?>
+            <tr>
+                <td><?php echo $emp["id"]; ?></td>
+                <td><?php echo $emp["name"]; ?></td>
+                <td><?php echo $emp["basic"]; ?></td>
+                <td><?php echo $emp["bonus"]; ?></td>
+                <td class="highlight"><?php echo $totalSalary; ?></td>
+            </tr>
+            <?php } ?>
+        </table>
+    </div>
+</body>
+</html>
