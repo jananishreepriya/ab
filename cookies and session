@@ -1,0 +1,88 @@
+cookies and sessions:
+
+<?php
+session_start();
+
+// -------------------
+// Dummy login details
+// -------------------
+$valid_username = "admin";
+$valid_password = "12345";
+
+// -------------------
+// Visit counter using cookie
+// -------------------
+if (isset($_COOKIE['visits'])) {
+    $visits = $_COOKIE['visits'] + 1;
+} else {
+    $visits = 1;
+}
+setcookie("visits", $visits, time() + (30 * 24 * 60 * 60), "/"); // store for 30 days
+
+// -------------------
+// Logout
+// -------------------
+if (isset($_GET['action']) && $_GET['action'] == "logout") {
+    session_unset();
+    session_destroy();
+    setcookie("username", "", time() - 3600, "/"); // clear username cookie
+    echo "You have been logged out.<br><a href='?'>Login Again</a>";
+    exit();
+}
+
+// -------------------
+// Auto login from cookie if no session
+// -------------------
+if (!isset($_SESSION['username']) && isset($_COOKIE['username'])) {
+    $_SESSION['username'] = $_COOKIE['username'];
+}
+
+// -------------------
+// Handle login form
+// -------------------
+if (isset($_POST['login'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if ($username === $valid_username && $password === $valid_password) {
+        // Store in session
+        $_SESSION['username'] = $username;
+
+        // If Remember Me checked → set cookie for 7 days
+        if (!empty($_POST['remember'])) {
+            setcookie("username", $username, time() + (7 * 24 * 60 * 60), "/");
+        }
+
+        header("Location: ?");
+        exit();
+    } else {
+        $error = "Invalid username or password!";
+    }
+}
+
+// -------------------
+// Display section
+// -------------------
+if (isset($_SESSION['username'])) {
+    // Logged in user
+    echo "<h2>Welcome, " . $_SESSION['username'] . "!</h2>";
+    echo "<p>You have visited this page <b>" . $visits . "</b> times.</p>";
+    echo "<a href='?action=logout'>Logout</a>";
+} else {
+    // Show login form
+    ?>
+    <h2>Login</h2>
+    <?php if (isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
+    <form method="post">
+        Username: 
+        <input type="text" name="username" 
+            value="<?php echo isset($_COOKIE['username']) ? $_COOKIE['username'] : ''; ?>"><br><br>
+        Password: 
+        <input type="password" name="password"><br><br>
+        <input type="checkbox" name="remember"> Remember Me<br><br>
+        <input type="submit" name="login" value="Login">
+    </form>
+    <p>You have visited this page <b><?php echo $visits; ?></b> times.</p>
+    <?php
+}
+?>
