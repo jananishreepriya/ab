@@ -1,0 +1,27 @@
+<?php
+// Function to withdraw money from account
+function withdraw($balance, $amount) {
+    if ($amount > $balance) {
+        // Throw an exception if balance is insufficient
+        throw new Exception("Insufficient balance! You have only $balance.");
+    } elseif ($amount <= 0) {
+        // Throw an exception for invalid amount
+        throw new Exception("Withdrawal amount must be greater than zero!");
+    }
+    $balance -= $amount;
+    return $balance;
+}
+
+try {
+    $balance = 1000; // Current account balance
+    $withdrawAmount = 500; // Amount to withdraw
+
+    $newBalance = withdraw($balance, $withdrawAmount);
+    echo "Withdrawal successful! New balance: $newBalance";
+} 
+catch (Exception $e) {
+    echo "Transaction failed: " . $e->getMessage();
+}
+
+echo "<br>Thank you for banking with us!";
+?>
