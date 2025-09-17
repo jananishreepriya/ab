@@ -1,0 +1,64 @@
+<?php
+$fruits = ["apple", "banana", "Cherry", "date", "Blueberry", "kiwi"];
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>String Functions with Control Structures & Loops</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f8f9fa; padding: 20px; }
+    .container { width: 60%; margin: 20px auto; background: white; padding: 20px; border-radius: 10px; border: 1px solid #ccc; }
+    h2 { text-align: center; color: #007bff; }
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+    th, td { border: 1px solid #999; padding: 8px; text-align: center; }
+    th { background: #007bff; color: white; }
+    td { background: #f4f6f7; }
+    .long { color: green; font-weight: bold; }
+    .short { color: orange; font-weight: bold; }
+    .contains { color: blue; font-weight: bold; }
+    .doesnt-contain { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Processing Strings with String Functions, Control Structures & Loops</h2>
+<table>
+    <tr>
+        <th>Original</th>
+        <th>Uppercase</th>
+        <th>Reversed</th>
+        <th>Length Status</th>
+        <th>Contains 'e'?</th>
+    </tr>
+    <?php
+    foreach ($fruits as $fruit) {
+        $upper = strtoupper($fruit);
+        $rev = strrev($fruit);
+        $len = strlen($fruit);
+
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($fruit) . "</td>";
+        echo "<td>" . $upper . "</td>";
+        echo "<td>" . $rev . "</td>";
+
+        if ($len > 5) {
+            echo "<td class='long'>Long ($len chars)</td>";
+        } else {
+            echo "<td class='short'>Short ($len chars)</td>";
+        }
+
+        if (strpos(strtolower($fruit), 'e') !== false) {
+            echo "<td class='contains'>Yes</td>";
+        } else {
+            echo "<td class='doesnt-contain'>No</td>";
+        }
+
+        echo "</tr>";
+    }
+    ?>
+</table>
+</div>
+</body>
+</html>
