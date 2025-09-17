@@ -1,0 +1,79 @@
+<?php
+$uploadDir = "uploads";
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir);
+}
+$msg = "";
+
+// Upload image
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
+    $file = $_FILES["image"];
+    $name = basename($file["name"]);
+    $target = $uploadDir . "/" . $name;
+    $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+    $allowed = ['jpg','jpeg','png','gif'];
+
+    if (in_array($ext, $allowed)) {
+        if (move_uploaded_file($file["tmp_name"], $target)) {
+            $msg = "Image uploaded!";
+        } else {
+            $msg = "Upload failed.";
+        }
+    } else {
+        $msg = "Only JPG, PNG, GIF files allowed.";
+    }
+}
+
+// Delete image
+if (isset($_GET['del'])) {
+    $fileToDelete = $uploadDir . "/" . basename($_GET['del']);
+    if (file_exists($fileToDelete)) {
+        unlink($fileToDelete);
+        header("Location: " . strtok($_SERVER["REQUEST_URI"], '?'));
+        exit;
+    }
+}
+
+// Read images
+$images = array_filter(scandir($uploadDir), function($f) use ($uploadDir) {
+    $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
+    return in_array($ext, ['jpg','jpeg','png','gif']);
+});
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Image Upload</title>
+    <style>
+        body { font-family: Arial; margin: 30px; }
+        h1 { text-align: center; }
+        form { text-align:center; margin-bottom: 20px; }
+        input[type="file"] { margin-bottom: 10px; }
+        button { padding: 8px 15px; cursor: pointer; }
+        .msg { text-align: center; font-weight: bold; margin-bottom: 20px; }
+        .gallery { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .img-box { border: 1px solid #ccc; padding: 5px; text-align: center; width: 180px; }
+        .img-box img { width: 100%; height: 140px; object-fit: cover; }
+        .img-box a { color: red; text-decoration: none; display: inline-block; margin-top: 5px; }
+        .img-box a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<h1>Upload Image</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    <input type="file" name="image" required><br>
+    <button type="submit">Upload</button>
+</form>
+<p class="msg"><?php echo htmlspecialchars($msg); ?></p>
+
+<div class="gallery">
+    <?php foreach ($images as $img): ?>
+    <div class="img-box">
+        <img src="<?php echo $uploadDir . '/' . htmlspecialchars($img); ?>" alt="Image">
+        <a href="?del=<?php echo urlencode($img); ?>" onclick="return confirm('Delete this image?')">Delete</a>
+    </div>
+    <?php endforeach; ?>
+</div>
+</body>
+</html>
