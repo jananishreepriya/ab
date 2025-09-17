@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Anugrahaa V - Portfolio</title>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Internal CSS -->
+  <style>
+    header, footer {
+      background-color: #003366;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+    h2 {
+      border-bottom: 2px solid #4da6ff;
+      padding-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header style="font-family: 'Georgia', serif;"> 
+  <h1>Anugrahaa V</h1>
+  <p style="font-style: italic;">B.Sc. Computer Science Student</p> <!-- Inline CSS -->
+</header>
+
+<section id="home">
+  <h2>Welcome</h2>
+  <p>This is my online resume. Use the links above to explore my details.</p>
+</section>
+
+<section id="objective">
+  <h2>Career Objective</h2>
+  <p>
+    I am a passionate computer science student skilled in Java and SQL with an interest in backend development. 
+    I aim to join a dynamic company to grow as a developer and contribute to real-world projects.
+  </p>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <p><b>E-commerce Management System</b>: Designed a database system for product listings, orders, and inventory.</p>
+  <p><b>Book Management System (Flutter):</b> Manage book records for students and small libraries.</p>
+</section>
+
+<section id="skills">
+  <h2>Technical Skills</h2>
+  <ul>
+    <li>Java programming</li>
+    <li>SQLPlus database queries</li>
+  </ul>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p><b>Phone:</b> 8220854626</p>
+  <p><b>Email:</b> <a href="mailto:23bcs004@psgrkcw.ac.in" style="color: #4da6ff;">23bcs004@psgrkcw.ac.in</a></p> <!-- Inline CSS -->
+  <p><b>LinkedIn:</b> <a href="https://www.linkedin.com/in/v-anugrahaa" target="_blank">v-anugrahaa</a></p>
+  <p><b>GitHub:</b> <a href="https://github.com/anugrahaa-v" target="_blank">anugrahaa-v</a></p>
+</section>
+
+<footer>
+  <p>© 2025 Anugrahaa V | PSGR Krishnammal College for Women</p>
+</footer>
+
+</body>
+</html>
+
+css:
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e6f2ff;
+  color: #003366;
+}
+ section {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
