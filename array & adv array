@@ -1,0 +1,85 @@
+<?php
+// Normal (indexed) array of student names
+$studentNames = ["John", "Mary", "Peter", "Anita"];
+
+// Multidimensional associative array (name + marks)
+$students = [
+    ["name" => "John",  "marks" => 85],
+    ["name" => "Mary",  "marks" => 92],
+    ["name" => "Peter", "marks" => 67],
+    ["name" => "Anita", "marks" => 45]
+];
+
+function calculateGrade($marks) {
+    if ($marks >= 90) return "A";
+    elseif ($marks >= 75) return "B";
+    elseif ($marks >= 50) return "C";
+    else return "F";
+}
+
+// Array functions on the multidimensional array
+$marksArray    = array_column($students, "marks");
+$totalMarks    = array_sum($marksArray);
+$averageMarks  = $totalMarks / count($marksArray);
+$highestMark   = max($marksArray);
+$lowestMark    = min($marksArray);
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PHP Arrays Example</title>
+    <style>
+        body { font-family: Arial; background: #f0f2f5; }
+        .container { width: 390px; margin: 30px auto; background: #fff; padding: 16px; border-radius: 7px; box-shadow: 0 0 8px #bbb; }
+        h2 { color: #214b8c; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #aaa; padding: 8px; text-align: center; }
+        th { background: #214b8c; color: #fff; }
+        td { background: #f6fafd; }
+        .gradeA { color: green; font-weight: bold; }
+        .gradeB { color: blue; font-weight: bold; }
+        .gradeC { color: orange; font-weight: bold; }
+        .gradeF { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Normal Array (Names Only)</h2>
+    <table>
+        <tr>
+            <th>S.No.</th>
+            <th>Student Name</th>
+        </tr>
+        <?php foreach ($studentNames as $i => $name): ?>
+        <tr>
+            <td><?php echo $i+1; ?></td>
+            <td><?php echo $name; ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <h2>Multidimensional Array (Details)</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Marks</th>
+            <th>Grade</th>
+        </tr>
+        <?php foreach ($students as $stu): 
+            $grade = calculateGrade($stu["marks"]);
+            $class = "grade".$grade;
+        ?>
+        <tr>
+            <td><?php echo $stu["name"]; ?></td>
+            <td><?php echo $stu["marks"]; ?></td>
+            <td class="<?php echo $class; ?>"><?php echo $grade; ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+    <p><b>Total Marks:</b> <?php echo $totalMarks; ?></p>
+    <p><b>Average Marks:</b> <?php echo round($averageMarks, 2); ?></p>
+    <p><b>Highest Mark:</b> <?php echo $highestMark; ?></p>
+    <p><b>Lowest Mark:</b> <?php echo $lowestMark; ?></p>
+</div>
+</body>
+</html>
